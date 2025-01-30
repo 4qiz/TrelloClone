@@ -1,7 +1,7 @@
 services:
   frontend-app:
     build:
-      context: ./app
+      context: ./TrelloClone
       dockerfile: Dockerfile
     container_name: frontend-app
     restart: always
@@ -26,11 +26,8 @@ services:
 
       traefik.http.services.frontend-app-service.loadbalancer.server.port: 3000
       traefik.http.middlewares.frontend-app-headers.headers.customrequestheaders.X-Forwarded-Proto: https
-  ports:
-    - 80:80
-    - 443:443
-  networks:
-    - traefik-public
+    networks:
+      - traefik-public
 
 networks:
   default:

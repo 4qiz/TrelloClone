@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watchAll",
-    "postinstall": "prisma generate"
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "@clerk/localizations": "^3.10.2",
