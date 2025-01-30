@@ -20,8 +20,7 @@ export const Info = ({ isPro }: InfoProps) => {
   return (
     <div className="flex items-center gap-x-4">
       <div className="w-[60px] h-[60px] relative">
-        <Image
-          fill
+        <img
           src={organization?.imageUrl!}
           alt="Organization"
           className="rounded-md object-cover"

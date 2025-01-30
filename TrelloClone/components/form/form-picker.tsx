@@ -83,11 +83,10 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
               value={`${image.id}|${image.urls.thumb}|${image.urls.full}|${image.links.html}|${image.user.name}`}
               readOnly
             />
-            <Image
+            <img
               src={image.urls.thumb}
               alt="Unsplash image"
-              className="object-cover rounded-sm"
-              fill
+              className="object-cover rounded-sm w-full h-full"
             />
             {selectedImageId === image.id && (
               <div className="absolute inset-y-0 h-full w-full bg-black/30 flex items-center justify-center">

@@ -74,8 +74,7 @@ export const NavItem = ({
       >
         <div className="flex items-center gap-x-2">
           <div className="w-7 h-7 relative">
-            <Image
-              fill
+            <img
               src={organization.imageUrl}
               alt="Organization"
               className="rounded-sm object-cover"
