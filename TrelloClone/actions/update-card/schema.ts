@@ -1,3 +1,4 @@
+import { CardStatus } from "@prisma/client";
 import { z } from "zod";
 
 export const UpdateCard = z.object({
@@ -23,4 +24,12 @@ export const UpdateCard = z.object({
       })
   ),
   id: z.string(),
+
+  deadlineDate: z.optional(
+    z.date({
+      required_error: "Deadline date is required",
+      invalid_type_error: "Deadline date must be a valid date string",
+    })
+  ),
+  status: z.nativeEnum(CardStatus),
 });

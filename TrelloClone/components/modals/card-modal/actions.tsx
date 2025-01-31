@@ -37,7 +37,7 @@ export const Actions = ({ data }: ActionsProps) => {
     deleteCard,
     {
       onSuccess: (data) => {
-        toast.success(`Card "${data.title}" deleted`);
+        toast.success(`Задача "${data.title}" удалена`);
         cardModal.onClose();
       },
       onError: (error) => {
@@ -66,7 +66,7 @@ export const Actions = ({ data }: ActionsProps) => {
 
   return (
     <div className="space-y-2 mt-2">
-      <p className="text-xs font-semibold">Actions</p>
+      <p className="text-xs font-semibold">Действия</p>
       <Button
         onClick={onCopy}
         disabled={isLoadingCopy}
@@ -75,7 +75,7 @@ export const Actions = ({ data }: ActionsProps) => {
         size="inline"
       >
         <Copy className="h-4 w-4 mr-2" />
-        Copy
+        Копировать
       </Button>
       <Button
         onClick={onDelete}
@@ -85,7 +85,7 @@ export const Actions = ({ data }: ActionsProps) => {
         size="inline"
       >
         <Trash2 className="h-4 w-4 mr-2" />
-        Delete
+        Удалить
       </Button>
     </div>
   );

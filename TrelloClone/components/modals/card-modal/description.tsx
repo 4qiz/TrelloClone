@@ -14,6 +14,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { FormSubmit } from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CardStatus } from "@prisma/client";
 
 interface DescriptionProps {
   data: CardWithList;
@@ -23,7 +33,7 @@ export const Description = ({ data }: DescriptionProps) => {
   const params = useParams();
   const queryClient = useQueryClient();
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
 
   const formRef = useRef<ElementRef<"form">>(null);
   const textareaRef = useRef<ElementRef<"textarea">>(null);
@@ -46,7 +56,7 @@ export const Description = ({ data }: DescriptionProps) => {
   };
 
   useEventListener("keydown", onKeyDown);
-  useOnClickOutside(formRef, disableEditing);
+  //useOnClickOutside(formRef, disableEditing);
 
   const { execute, fieldErrors } = useAction(updateCard, {
     onSuccess: (data) => {
@@ -66,12 +76,22 @@ export const Description = ({ data }: DescriptionProps) => {
 
   const onSubmit = (formData: FormData) => {
     const description = formData.get("description") as string;
+
+    const deadlineDateString = formData.get("deadlineDate") as string;
+    const deadlineDate: Date | undefined = deadlineDateString
+      ? new Date(deadlineDateString)
+      : undefined;
+
+    const status = formData.get("status") as CardStatus;
+
     const boardId = params.boardId as string;
 
     execute({
       id: data.id,
       description,
       boardId,
+      deadlineDate,
+      status,
     });
   };
 
@@ -79,7 +99,7 @@ export const Description = ({ data }: DescriptionProps) => {
     <div className="flex items-start gap-x-3 w-full">
       <AlignLeft className="h-5 w-5 mt-0.5 text-neutral-700" />
       <div className="w-full">
-        <p className="font-semibold text-neutral-700 mb-2">Description</p>
+        <p className="font-semibold text-neutral-700 mb-2">Описание</p>
         {isEditing ? (
           <form action={onSubmit} ref={formRef} className="space-y-2">
             <FormTextarea
@@ -90,6 +110,34 @@ export const Description = ({ data }: DescriptionProps) => {
               errors={fieldErrors}
               ref={textareaRef}
             />
+
+            {/* deadlineDate */}
+            <p className="font-semibold text-neutral-700 mb-2">Крайний срок</p>
+            <Input
+              type="date"
+              id="deadlineDate"
+              name="deadlineDate"
+              className="w-full"
+              defaultValue={
+                data.deadlineDate
+                  ? new Date(data.deadlineDate).toISOString().split("T")[0]
+                  : ""
+              }
+            />
+
+            {/* status */}
+            <p className="font-semibold text-neutral-700 mb-2">Статус</p>
+            <Select defaultValue={data.status} name="status">
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Выберите статус" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={CardStatus.CANCELLED}>Отменена</SelectItem>
+                <SelectItem value={CardStatus.TODO}>В процессе</SelectItem>
+                <SelectItem value={CardStatus.COMPLETED}>Выполнена</SelectItem>
+              </SelectContent>
+            </Select>
+
             <div className="flex items-center gap-x-2">
               <FormSubmit>Сохранить</FormSubmit>
               <Button
@@ -103,13 +151,37 @@ export const Description = ({ data }: DescriptionProps) => {
             </div>
           </form>
         ) : (
-          <div
-            onClick={enableEditing}
-            role="button"
-            className="min-h-[78px] bg-neutral-200 text-sm font-medium py-3 px-3.5 rounded-md"
-          >
-            {data.description || "Описание задачи..."}
-          </div>
+          <>
+            <div
+              onClick={enableEditing}
+              role="button"
+              className="min-h-[78px] bg-neutral-200 text-sm font-medium py-3 px-3.5 rounded-md mb-2"
+            >
+              {data.description || "Описание задачи..."}
+            </div>
+            <p className="font-semibold text-neutral-700 mb-2">Крайний срок</p>
+            <Input
+              onClick={enableEditing}
+              defaultValue={
+                data.deadlineDate
+                  ? new Date(data.deadlineDate).toISOString().split("T")[0]
+                  : ""
+              }
+              className="mb-2"
+            />
+
+            <p className="font-semibold text-neutral-700 mb-2">Статус</p>
+            <Select defaultValue={data.status} name="status">
+              <SelectTrigger className="w-full" onClick={enableEditing}>
+                <SelectValue placeholder="Выберите статус" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={CardStatus.CANCELLED}>Отменена</SelectItem>
+                <SelectItem value={CardStatus.TODO}>В процессе</SelectItem>
+                <SelectItem value={CardStatus.COMPLETED}>Выполнена</SelectItem>
+              </SelectContent>
+            </Select>
+          </>
         )}
       </div>
     </div>

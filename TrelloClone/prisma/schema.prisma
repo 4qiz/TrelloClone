@@ -52,10 +52,19 @@ model Card {
   listId              String
   list                List   @relation(fields: [listId], references: [id], onDelete: Cascade)
 
+  status CardStatus   @default(TODO)
+  deadlineDate        DateTime?
+
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
   @@index([listId])
+}
+
+enum CardStatus {
+  COMPLETED
+  CANCELLED
+  TODO
 }
 
 enum ACTION {
