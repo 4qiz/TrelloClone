@@ -10,12 +10,10 @@ Fullstack-приложение Tasker на Next.js 14, позволяющее п
 - **React**
 - **Typescript**
 - **Tailwindcss**
-- **Server Actions**
 - **Clerk**
 - **Prisma**
-- **Planet Scale**
 - **MySql**
-- **Shadcn-ui**
+- **Docker**
 
 ## Основные функции
 
