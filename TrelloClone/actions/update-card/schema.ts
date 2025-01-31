@@ -31,5 +31,5 @@ export const UpdateCard = z.object({
       invalid_type_error: "Deadline date must be a valid date string",
     })
   ),
-  status: z.nativeEnum(CardStatus),
+  status: z.optional(z.nativeEnum(CardStatus)),
 });
