@@ -1,4 +1,15 @@
-# 📝 Tasker ✅
+<div align="center">
+
+  <h2 align="center">Tasker</h2>
+
+  <p align="center">
+     Простая канбан доска
+    <br />
+  </p>
+  <a>
+    <img src="screens/board.png" alt="main">
+  </a>
+</div>
 
 ## Description
 
