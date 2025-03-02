@@ -7,7 +7,7 @@
     <br />
   </p>
   <a>
-    <img src="screens/board.png" alt="main">
+    <img src="screens/board.PNG" alt="main">
   </a>
 </div>
 
